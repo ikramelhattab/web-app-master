@@ -1,0 +1,56 @@
+ <div mat-dialog-title class="d-flex justify-content-between">
+    <h1>Ajouter Un Nouveau Type de Mission </h1>
+    <span class="times" (click)="onCancelClick($event)">&times;</span>
+</div>
+
+<form *ngIf="TypeMissionForm" [formGroup]="TypeMissionForm" (ngSubmit)="onSubmit()">
+
+    <div mat-dialog-content>
+        <!-- Type d'équipement -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-typeMission" [ngClass]="{'error': 
+            (f?.typeMission?.touched && f?.typeMission?.errors?.required)}">Type de mission* </label>
+            <input type="text" class="form-control" id="input-typeMission" name="input-typeMission" placeholder=""
+                formControlName="typeMission"  [ngClass]="{'error': 
+                (f?.typeMission?.touched && f?.typeMission?.errors?.required)}" >
+            <label class="error ms-2" *ngIf="f?.typeMission?.touched && f?.typeMission?.errors?.required" required>Ce champ
+                est obligatoire</label>
+        </div>
+
+
+        <!-- Description -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-desc" [ngClass]="{'error': 
+            (f?.description?.touched && f?.description?.errors?.required)}">Description*</label>
+            <input type="text" class="form-control" id="input-desc" name="input-desc" placeholder=""
+                formControlName="description" [ngClass]="{'error': 
+                (f?.description?.touched && f?.description?.errors?.required)}" required>
+            <label class="error ms-2" *ngIf="f?.description?.touched && f?.description?.errors?.required">Ce champ
+                est obligatoire</label>
+        </div>
+
+
+        <!-- Statut -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-statut" [ngClass]="{'error': 
+            (f?.statut?.touched && f?.statut?.errors?.required)}">Statut*</label>
+
+            <select class="form-control" id="input-statut" name="input-statut" required formControlName="statut" [ngClass]="{'error': 
+            (f?.statut?.touched && f?.statut?.errors?.required)}">
+                <option [value]="true">Actif</option>
+                <option [value]="false">Désactivé</option>
+            </select>
+  
+            <label class="error ms-2" *ngIf="f?.statut?.touched && f?.statut?.errors?.required">Ce champ
+                est obligatoire</label>
+        </div>
+
+
+    <div mat-dialog-actions align="end">
+        <button type="button" class="cancel-btn" (click)="onCancelClick($event)">Annuler</button>
+        <button type="submit" class="confirm-btn">
+            Valider
+        </button>
+    </div>
+    </div>
+</form> 

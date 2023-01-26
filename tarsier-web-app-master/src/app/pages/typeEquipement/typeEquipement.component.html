@@ -1,0 +1,50 @@
+<div *ngIf="isAdmin" class="container-fluid">
+
+
+    <div class="d-flex justify-content-center">
+        <button class="new-btn" (click)="dialog()">
+            <i class="fa-solid fa-plus"></i> Nouveau type d'équipement
+        </button>
+    </div>
+
+    <div class="Typequip-table-container">
+        <ngx-datatable class="material" [rows]="typeequips" [columnMode]="ColumnMode.force" [headerHeight]="50"
+            [footerHeight]="50" rowHeight="auto" [externalPaging]="true" [externalSorting]="true" [count]="page.count"
+            [offset]="page.offset" [limit]="page.limit" [loadingIndicator]="typeEquiLoading" (page)="onPage($event)"
+            [limit]="page.limit" [rowClass]="getRowClass" [messages]="{'emptyMessage': 'Pas de données.'}"
+            [sorts]="[{prop: 'typeEquip', dir: 'desc'}]" [sortType]="sortType" (sort)="onSort($event)">
+
+            <ngx-datatable-column name="Type d'équipement" prop="typeEquip">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{value}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Description" prop="description">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{value}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Statut" prop="statut">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span *ngIf="value">Actif</span>
+                    <span *ngIf="!value">Désactivé</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Actions" prop="id" [sortable]="false">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <button class="edit-tyEquip-btn" (click)="Editdialog(row)" title="Éditer">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                </ng-template>
+            </ngx-datatable-column>
+            
+        </ngx-datatable>
+    </div>
+</div>
+
+<div class="container-fluid" *ngIf="!isAdmin">
+    Téléchargement...
+</div>

@@ -1,0 +1,55 @@
+<div mat-dialog-title class="d-flex justify-content-between">
+    <h1>Ajouter Un Nouveau Type d'équipement </h1>
+    <span class="times" (click)="onCancelClick($event)">&times;</span>
+</div>
+
+<form *ngIf="TypeEqForm" [formGroup]="TypeEqForm" (ngSubmit)="onSubmit()">
+
+    <div mat-dialog-content>
+        <!-- Type d'équipement -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-typeEquip"
+                [ngClass]="{'error': (f?.typeEquip?.touched && f?.typeEquip?.errors?.required)}"> Type d'équipement*
+            </label>
+            <input type="text" class="form-control" id="input-typeEquip" name="input-typeEquip" placeholder=""
+                formControlName="typeEquip" [ngClass]="{'error': 
+                (f?.typeEquip?.touched && f?.typeEquip?.errors?.required)}">
+            <label class="error ms-2" *ngIf="f?.typeEquip?.touched && f?.typeEquip?.errors?.required" required>Ce champ
+                est obligatoire</label>
+        </div>
+
+
+        <!-- Description -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-desc">Description</label>
+            <input type="text" class="form-control" id="input-desc" name="input-desc" placeholder=""
+                formControlName="description">
+        </div>
+
+
+        <!-- Statut -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-statut" [ngClass]="{'error': 
+            (f?.statut?.touched && f?.statut?.errors?.required)}">Statut*</label>
+            <select id="input-statut" name="input-statut" required formControlName="statut"
+                [ngClass]="{'error': (f?.statut?.touched && f?.statut?.errors?.required)}">
+                <option [value]="true">Actif</option>
+                <option [value]="false">Désactivé</option>
+            </select>
+            <label class="error ms-2" *ngIf="f?.statut?.touched && f?.statut?.errors?.required">Ce champ
+                est obligatoire</label>
+        </div>
+    </div>
+
+    <div mat-dialog-actions align="end">
+        <button type="button" class="cancel-btn" (click)="onCancelClick($event)">Annuler</button>
+        <button type="submit" [disabled]="loading" [ngClass]="{'disabled': TypeEqForm?.invalid}" class="confirm-btn">
+            <span *ngIf="!loading">Valider</span>
+            <div *ngIf="loading">
+                <div class="spinner-border" role="status" style="width: 20px; height: 20px;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,9 @@
+<div mat-dialog-title class="d-flex justify-content-between">
+    <h1>{{data.code}}</h1>
+    <span class="times" (click)="onCancelClick($event)">&times;</span>
+</div>
+<div mat-dialog-content>
+    <div class="text-center">
+        <img [src]="data.photoUrl" class="eqp-image">
+    </div>
+</div>

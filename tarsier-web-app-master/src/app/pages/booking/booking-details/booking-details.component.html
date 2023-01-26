@@ -1,0 +1,123 @@
+<div mat-dialog-title class="d-flex justify-content-between">
+    <h1>Reservation de {{data.user}}</h1>
+    <span class="times" (click)="onCancelClick()">&times;</span>
+</div>
+
+<div mat-dialog-content class="content" [ngClass]="{'error': preparingToDelete}">
+
+    <div class="d-flex justify-content-between line">
+        <div class="prop-title">
+            Début réservation
+        </div>
+        <div class="prop-info">
+            {{fromStr}}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between line">
+        <div class="prop-title">
+            Numéro de réservation
+        </div>
+        <div class="prop-info">
+            {{data.num_reservation}}
+
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between line">
+        <div class="prop-title">
+            Fin réservation
+        </div>
+        <div class="prop-info">
+            {{toStr}}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between line">
+        <div class="prop-title">
+            Utilisateur
+        </div>
+        <div class="prop-info">
+            {{data.user}}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between line">
+        <div class="prop-title">
+            Crée par
+        </div>
+        <div class="prop-info">
+            {{data.createdBy}}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between line">
+        <div class="prop-title">
+            Type de Mission
+        </div>
+        <div class="prop-info">
+            {{data.typeMissionId}}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between line">
+        <div class="prop-title">
+            Périmètre
+        </div>
+        <div class="prop-info">
+            {{data.perimeterId}}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between line">
+        <div class="prop-title">
+            Equipements
+        </div>
+        <div class="prop-info">
+            {{data.equipId}}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between line">
+        <div class="prop-title">
+            Statut
+        </div>
+        <div class="prop-info">
+            {{data.statut}}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between line">
+        <div class="prop-title">
+            Date de création
+        </div>
+        <div class="prop-info">
+            {{createdOnStr}}
+        </div>
+    </div>
+
+    <!-- Show delete button only when the user are admin or they are the one who have the reservation -->
+    <div class="del-btn-container" *ngIf="isAdmin || currentUid === data.userId">
+        <button [disabled]="loadingDel" class="delete-btn" (click)="deleteRes()"
+            *ngIf="!preparingToDelete">Supprimer</button>
+        <div class="d-flex justify-content-between before-delete" *ngIf="preparingToDelete">
+            <div>Etes vous sur de supprimer cette réservation?</div>
+            <button [disabled]="loadingDel" class="delete-btn" (click)="deleteRes()">
+                <span *ngIf="!loadingDel">Oui, supprimer</span>
+                <div *ngIf="loadingDel">
+                    <div class="spinner-border" role="status" style="width: 10px; height: 10px;">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button (click)="onDetailsClick()" class="cancel-btn" [routerLink]="'/reservationDetails/'" [queryParams]="{'id': data.bookingId, index: 0}">
+        Plus du détails
+    </button>
+    <button [disabled]="loadingDel" class="cancel-btn" (click)="onCancelClick()">Annuler</button>
+
+</div>

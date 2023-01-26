@@ -1,0 +1,111 @@
+<div mat-dialog-title class="d-flex justify-content-between">
+  <h1>Nouvelle Reservation</h1>
+  <span class="times" (click)="onCancelClick()">&times;</span>
+</div>
+
+<div mat-dialog-content>
+
+  <form *ngIf="bookingForm" [formGroup]="bookingForm">
+
+    <div class="row dates-inputs-row">
+
+      <div class="col-md-6 form-group-control">
+        <label class="input-label" for="select-statut" for="input-typeMissionId" [ngClass]="{'error': 
+        f?.typeMissionId?.touched && f?.typeMissionId?.errors?.required}">Type*</label>
+        <select id="input-typeMissionId" name="input-typeMissionId" formControlName="typeMissionId"
+          required [ngClass]="{'error': 
+                (f?.typeMissionId?.touched && f?.typeMissionId?.errors?.required)}">
+          <option *ngFor="let tyMiss of tyMission" [value]="tyMiss._id">{{tyMiss.typeMission}}</option>
+        </select>
+        <label class="error ms-2" *ngIf="f?.typeMissionId?.touched && f?.typeMissionId?.errors?.required">Ce champ
+          est obligatoire</label>
+      </div>
+
+
+      <div class="col-md-6 form-group-control">
+        <label class="input-label" for="select-statut" for="input-perimeterId" [ngClass]="{'error': 
+                f?.perimeterId?.touched && f?.perimeterId?.errors?.required}">Périmètre*</label>
+        <select id="input-perimeterId" name="input-perimeterId" formControlName="perimeterId"
+          required [ngClass]="{'error': 
+            (f?.perimeterId?.touched && f?.perimeterId?.errors?.required)}">
+          <option *ngFor="let peri of perimeters" [value]="peri._id">{{peri.code}}</option>
+        </select>
+        <label class="error ms-2" *ngIf="f?.perimeterId?.touched && f?.perimeterId?.errors?.required">Ce champ
+          est obligatoire</label>
+      </div>
+
+
+    </div>
+
+    <div class="row dates-inputs-row">
+      <div class="col-md-12 form-group-control">
+        <label class="input-label" for="select-statut" for="input-equipId" [ngClass]="{'error': f?.equipId?.touched && f?.equipId?.errors?.required}">Equipement*</label>
+
+        <select id="input-equipId" name="input-equipId" formControlName="equipId" required
+          [ngClass]="{'error': 
+              (f?.equipId?.touched && f?.equipId?.errors?.required)}">
+          <option *ngFor="let equip of equips" [value]="equip._id">{{equip.code}}</option>
+        </select>
+        <label class="error ms-2" *ngIf="f?.equipId?.touched && f?.equipId?.errors?.required">Ce champ
+          est obligatoire</label>
+      </div>
+     
+    </div>
+
+    <!-- Start Date -->
+    <div class="row dates-inputs-row">
+      <div class="col-md-6 form-group-control">
+        <label class="input-label" for="input-start-date" [ngClass]="{'error': 
+              f?.formStartDate?.touched && f?.formStartDate?.errors?.required}">Date de début*</label>
+        <input type="date" class="form-control" id="input-start-date" name="input-start-date" required placeholder=""
+          formControlName="formStartDate"
+          [ngClass]="{'error': f?.formStartDate?.touched && f?.formStartDate?.errors?.required}">
+        <label class="error ms-2" *ngIf="f?.formStartDate?.touched && f?.formStartDate?.errors?.required">Ce champ
+          est obligatoire</label>
+      </div>
+      <div class="col-md-6 form-group-control">
+        <label class="input-label" for="input-start-hour" [ngClass]="{'error': 
+              f?.formStartHour?.touched && f?.formStartHour?.errors?.required}">Heure de début*</label>
+        <input type="time" class="form-control" id="input-start-hour" name="input-start-hour" required placeholder=""
+          formControlName="formStartHour"
+          [ngClass]="{'error': f?.formStartHour?.touched && f?.formStartHour?.errors?.required}">
+        <label class="error ms-2" *ngIf="f?.formStartHour?.touched && f?.formStartHour?.errors?.required">Ce champ
+          est obligatoire</label>
+      </div>
+    </div>
+
+    <!-- End Date -->
+    <div class="row">
+      <div class="col-md-6 form-group-control">
+        <label class="input-label" for="input-end-date" [ngClass]="{'error': 
+          f?.formEndDate?.touched && f?.formEndDate?.errors?.required}">Date de fin*</label>
+        <input type="date" class="form-control" id="input-end-date" name="input-end-date" required placeholder=""
+          formControlName="formEndDate"
+          [ngClass]="{'error': f?.formEndDate?.touched && f?.formEndDate?.errors?.required}">
+        <label class="error ms-2" *ngIf="f?.formEndDate?.touched && f?.formEndDate?.errors?.required">Ce champ
+          est obligatoire</label>
+      </div>
+      <div class="col-md-6 form-group-control">
+        <label class="input-label" for="input-end-hour" [ngClass]="{'error': 
+          f?.formEndHour?.touched && f?.formEndHour?.errors?.required}">Heure de fin*</label>
+        <input type="time" class="form-control" id="input-end-hour" name="input-end-hour" required placeholder=""
+          formControlName="formEndHour"
+          [ngClass]="{'error': f?.formEndHour?.touched && f?.formEndHour?.errors?.required}">
+        <label class="error ms-2" *ngIf="f?.formEndHour?.touched && f?.formEndHour?.errors?.required">Ce champ
+          est obligatoire</label>
+      </div>
+    </div>
+  </form>
+
+</div>
+<div mat-dialog-actions align="end">
+  <button [disabled]="loading" class="cancel-btn" (click)="onCancelClick()">Annuler</button>
+  <button class="confirm-btn" [disabled]="bookingForm?.invalid || loading" (click)="onConfirmClick()">
+    <span *ngIf="!loading">Ajouter</span>
+    <div *ngIf="loading">
+      <div class="spinner-border" role="status" style="width: 20px; height: 20px;">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </button>
+</div>

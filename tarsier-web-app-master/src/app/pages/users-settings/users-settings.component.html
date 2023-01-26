@@ -1,0 +1,71 @@
+<div class="settings-component">
+
+    <div *ngIf="isAdmin">
+        <div class="d-flex justify-content-between">
+            <h2>Liste des utilisateurs</h2>
+            <div class="search-container">
+                <span class="icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+                <input type="text" class="search-input" placeholder="Recherche par nom utilisateur ou email"
+                    [(ngModel)]="page.filter" (ngModelChange)="onSearch($event)">
+            </div>
+            <button class="add-user-btn" (click)="addUser()">Ajouter un utilisateur</button>
+        </div>
+        <div class="user-table-container">
+            <ngx-datatable class="material" [rows]="usersList" [columnMode]="ColumnMode.force" [headerHeight]="50"
+                [footerHeight]="50" rowHeight="auto" [externalPaging]="true" [externalSorting]="true"
+                [count]="page.count" [offset]="page.offset" [loadingIndicator]="usersListLoading"
+                (page)="onPage($event)" [limit]="page.limit" [rowClass]="getRowClass"
+                [messages]="{'emptyMessage': 'Pas de données.'}" [sorts]="[{prop: 'lastSignIn', dir: 'desc'}]"
+                [sortType]="sortType" (sort)="onSort($event)">
+
+                <ngx-datatable-column name="Nom" prop="name">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <span>{{value}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Email" prop="email">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <span title="{{value}}">{{value}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Derniér accès" prop="lastSignIn">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <span>{{toDate(value)}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Type" prop="isAdmin">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <span *ngIf="value" class="admin-badge">admin</span>
+                        <span *ngIf="!value">user</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Date de création" prop="createdOn">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <span>{{toDate(value)}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Créé par" prop="createdBy">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <span>{{value? value : '--'}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Actions" prop="id" [sortable]="false">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <button class="edit-user-btn" (click)="editUser(value)" title="Éditer">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+    </div>
+    <div *ngIf="!isAdmin">
+        Téléchargement...
+    </div>
+</div>

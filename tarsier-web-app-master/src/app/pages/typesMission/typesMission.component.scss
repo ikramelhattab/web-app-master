@@ -1,0 +1,16 @@
+
+
+.miss-table-container {
+  margin-top: 10px;
+}
+
+:host ::ng-deep {
+  .typemission-row {
+    border-top: 1px solid #e7e9eb;
+  }
+  .select-statut {
+    border-radius: 10px;
+    padding: 2px;
+  }
+
+}

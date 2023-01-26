@@ -1,0 +1,67 @@
+<div mat-dialog-title class="d-flex justify-content-between">
+    <h1>Editer Un Utilisateur</h1>
+    <span class="times" (click)="onCancelClick()">&times;</span>
+</div>
+
+<div mat-dialog-content [ngClass]="{'del-mode': preparingToDelete}">
+    <div *ngIf="!preparingToDelete">Vous pouvez mettre à jour les champs que vous voulez.</div>
+    <div *ngIf="!preparingToDelete">Si un champs reste intacte ou vide, il ne sera pas mis à jour.</div>
+    <div *ngIf="preparingToDelete" class="d-flex justify-content-between mt-4">
+        <div class="confirm-del-info">Êtes-vous sûr de supprimer définitivement cet utilisateur?</div>
+        <button class="confirm-del-btn" (click)="deleteUser()">
+            <span *ngIf="!loadingDel">Oui, le supprimer</span>
+            <div *ngIf="loadingDel">
+                <div class="spinner-border" role="status" style="width: 20px; height: 20px;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </button>
+    </div>
+
+    <form *ngIf="editUserForm" [formGroup]="editUserForm">
+        <!-- Last Name -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-lastName">Nom </label>
+            <input type="text" class="form-control" id="input-lastName" name="input-lastName" placeholder=""
+                formControlName="formLastName">
+        </div>
+
+        <!-- First Name -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-firstName">Prénom </label>
+            <input type="text" class="form-control" id="input-firstName" name="input-firstName" placeholder=""
+                formControlName="formFirstName">
+        </div>
+
+        <!-- Email -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-email" [ngClass]="{'error': 
+                    (f?.formEmail?.touched && f?.formEmail?.errors?.pattern)}">E-MAIL </label>
+            <input type="email" class="form-control" pattern=".+@.+\..+" id="input-email" name="input-email"
+                placeholder="" formControlName="formEmail" autocomplete="email" [ngClass]="{'error': 
+                        (f?.formEmail?.touched && f?.formEmail?.errors?.pattern)}">
+            <label class="error ms-2" *ngIf="f?.formEmail?.touched && f?.formEmail?.errors?.pattern">Email non
+                valide</label>
+        </div>
+    </form>
+
+</div>
+
+<div mat-dialog-actions class="d-flex justify-content-between">
+    <div>
+        <button *ngIf="!isAdmin && !preparingToDelete" class="delete-btn" (click)="deleteUser()">Supprimer</button>
+    </div>
+
+    <div>
+        <button [disabled]="loading" class="cancel-btn" (click)="onCancelClick()">Annuler</button>
+        <button type="submit" class="confirm-btn" (click)="onConfirmClick()"
+            [disabled]="editUserForm?.invalid || loading || preparingToDelete || loadingDel">
+            <span *ngIf="!loading">Mettre à jour</span>
+            <div *ngIf="loading">
+                <div class="spinner-border" role="status" style="width: 20px; height: 20px;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </button>
+    </div>
+</div>

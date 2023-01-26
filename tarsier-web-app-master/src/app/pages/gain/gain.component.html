@@ -1,0 +1,171 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between">
+        <div>
+            <button (click)="ParetoGains()" style="border:none;background-color:white;">
+                <img src="assets/pareto.png" height="35">
+            </button>
+            &nbsp; &nbsp;
+            <button (click)="ParetoGains()" style="border:none;background-color:white;">
+                <img src="assets/bar-chart.png" height="35">
+            </button>
+        </div>
+        <div>
+            <button (click)="openPDF(choosenStartDate, choosenEndDate,choosenPeri,choosenTypeMiss);" style="border:none;background-color: transparent;">
+                <img src="assets/pdf.png" height="35">
+            </button>
+            &nbsp; &nbsp;
+            <button (click)="printThisPage()" style="border:none;background-color:white;">
+                <img src="assets/print.png" height="35">
+            </button>
+        </div>
+    </div>
+
+
+    <br>
+
+
+    <div class="row">
+        <!-- Filter stuffs -->
+        <div class="col-md-6">
+            <div class="filter-wrapper">
+                <div class="filter-element">
+                    <div class="select-wrapper">
+                        <label class="input-label" for="select-statut" for="input-peri">PERIMETRE</label>
+                        <select class="select-torsier" id="select-plan" [(ngModel)]="choosenPeri"
+                            (ngModelChange)="onPerimeterChange()">
+                            <option *ngFor="let peri of perimeters" [value]="peri.code">{{peri.code}}</option>
+                            <option [value]="'all'">Tout</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-element">
+                    <div class="select-wrapper">
+                        <label class="input-label" for="select-statut" for="input-typeMissionId">TYPE</label>
+                        <select class="select-torsier" id="select-plan" [(ngModel)]="choosenTypeMiss"
+                            (ngModelChange)="onTypeMissChange()">
+                            <option *ngFor="let tyMiss of tyMissionsList" [value]="tyMiss.typeMission">
+                                {{tyMiss.typeMission}}
+                            </option>
+                            <option [value]="'all'">Tout</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="filter-element row">
+                    <div class="col-md-6">
+                        <div class="date-input-wrapper">
+                            <label class="input-label">Date de début</label>
+                            <input type="date" [(ngModel)]="choosenStartDate" (ngModelChange)="onStartDateChange()"
+                                class="choose-date" name="choose-date" id="choose-date">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="date-input-wrapper">
+                            <label class="input-label">Date de fin</label>
+                            <input type="date" [(ngModel)]="choosenEndDate" (ngModelChange)="onEndDateChange()"
+                                class="choose-date" name="choose-date" id="choose-date">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Gain stuffs -->
+        <div class="col-md-6">
+            <div class="gain-wrapper">
+                <div class="card-title">Calcul</div>
+                <div class="d-flex justify-content-between line">
+                    <div class="prop-title">
+                        Valeur fuite
+                    </div>
+                    <div class="prop-info">
+                        {{this.totalCostLeak | number:'1.0-2':'fr'}} Euro
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between line">
+                    <div class="prop-title">
+                        Cout actions
+                    </div>
+                    <div class="prop-info">
+                        {{ this.totalCostAction | number:'1.0-2':'fr'}} Euro
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between line stress">
+                    <div class="prop-title">
+                        <i style="color: #1b34d8;" class="fa-solid fa-dollar-sign"></i> Gain
+                    </div>
+                    <div class="prop-info">
+                        {{this.totalGain | number:'1.0-2':'fr'}} Euro
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between line stress">
+                    <div class="prop-title">
+                        <i style="color: rgb(3, 184, 3);" class="fa-solid fa-leaf"></i> Gain CO2
+                    </div>
+                    <div class="prop-info">
+                        <span> {{ this.totalGainCo2 | number:'1.0-2':'fr' }} Kg CO2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- Gain Table -->
+    <div class="gain-table-container">
+        <ngx-datatable class="material" [rows]="leaks" [columnMode]="ColumnMode.force" [headerHeight]="50"
+            [footerHeight]="50" rowHeight="auto" [externalPaging]="true" [externalSorting]="true" [count]="page.count"
+            [offset]="page.offset" [limit]="page.limit" [loadingIndicator]="loading" (page)="onPage($event)"
+            [limit]="page.limit" [rowClass]="getRowClass" [messages]="{'emptyMessage': 'Pas de données.'}"
+            [sorts]="[{prop: 'num_reservation', dir: 'desc'}]" [sortType]="sortType" (sort)="onSort($event)">
+
+            <ngx-datatable-column name="Mission" prop="num_reservation">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <a [routerLink]="'/reservationDetails'" [queryParams]="{id: row.id, index: 0}">{{value}}</a>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Nom Fuite" prop="leakName">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span> {{value}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Périmètre" prop="perimeterCode">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span> {{value}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Type Mission" prop="typeMission">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{value}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Gain (€ /an)" prop="finalGain">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{value}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Action" prop="actionDesc">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{value}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Date Cloture" prop="actionDelai">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{toDate(value)}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>
+
+<div #htmlData>
+</div>

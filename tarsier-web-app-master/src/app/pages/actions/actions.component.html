@@ -1,0 +1,155 @@
+<div class="container-fluid">
+
+
+  <div class="d-flex justify-content-between mb-2">
+    <div></div>
+    <div>
+      <button (click)="openPDF(choosenStartDate, choosenEndDate,choosenPeri,choosenTypeMiss,piloteModel,choosenActionStatut,choosenTypeAction);" style="border:none;background-color:transparent;">
+        <img src="assets/pdf.png" height="35">
+      </button>
+      &nbsp; &nbsp;
+      <button (click)="printThisPage()" style="border:none;background-color:transparent;">
+        <img src="assets/print.png" height="35">
+      </button>
+    </div>
+  </div>
+
+
+
+
+    <!-- Filtering stuffs -->
+    <div class="d-flex justify-content-center">
+      <div class="select-wrapper">
+        <label class="input-label" for="select-statut" for="input-peri">PERIMETRE</label>
+        <select class="select-setting" id="select-plan" [(ngModel)]="choosenPeri" (ngModelChange)="onPerimeterChange()">
+          <option *ngFor="let peri of perimeters" [value]="peri.code">{{peri.code}}</option>
+          <option [value]="'all'">Tout</option>
+        </select>
+      </div>
+
+      <div class="select-wrapper">
+        <label class="input-label" for="select-statut" for="input-typeMissionId">TYPE MISSION</label>
+        <select class="select-setting" id="select-plan" [(ngModel)]="choosenTypeMiss"
+          (ngModelChange)="onTypeMissChange()">
+          <option *ngFor="let tyMiss of tyMission" [value]="tyMiss.typeMission">{{tyMiss.typeMission}}
+          </option>
+          <option [value]="'all'">Tout</option>
+        </select>
+      </div>
+
+      <div class="input-wrapper">
+        <label class="input-label" for="select-pilote" for="input-pilote">PILOTE</label>
+        <input type="text" class="search-input" placeholder="Recherche Pilote..." [(ngModel)]="piloteModel"
+          (ngModelChange)="onPiloteSearch($event)">
+      </div>
+
+      <div class="select-wrapper">
+        <label class="input-label" for="select-statut" for="input-statut">STATUT</label>
+        <select class="select-setting" [(ngModel)]="choosenActionStatut" (ngModelChange)="onActStatutChange()">
+          <option [value]="'En cours'">En cours</option>
+          <option [value]="'Clôturé'">Clôturé</option>
+          <option [value]="'all'">Tout</option>
+        </select>
+      </div>
+
+      <div class="select-wrapper">
+        <label class="input-label" for="select-statut" for="input-statut">TYPE ACTION</label>
+        <select class="select-setting" [(ngModel)]="choosenTypeAction" (ngModelChange)="onActTypeChange()">
+          <option [value]="'Réparation'">Réparation</option>
+          <option [value]="'Controle'">Controle</option>
+          <option [value]="'all'">Tout</option>
+        </select>
+      </div>
+
+      <div class="input-wrapper">
+        <label class="input-label">Date de début</label>
+        <input type="date" [(ngModel)]="choosenStartDate" (ngModelChange)="onStartDateChange()" class="choose-date"
+          name="choose-date" id="choose-date">
+      </div>
+
+      <div class="input-wrapper">
+        <label class="input-label">Date de fin</label>
+        <input type="date" [(ngModel)]="choosenEndDate" (ngModelChange)="onEndDateChange()" class="choose-date"
+          name="choose-date" id="choose-date">
+      </div>
+    </div>
+
+
+    <!-- Actions table -->
+    <div class="leak-table-container">
+      <ngx-datatable class="material" [rows]="leaks" [columnMode]="ColumnMode.force" [headerHeight]="50"
+        [footerHeight]="50" rowHeight="auto" [externalPaging]="true" [externalSorting]="true" [count]="page.count"
+        [offset]="page.offset" [limit]="page.limit" [loadingIndicator]="loading" (page)="onPage($event)"
+        [limit]="page.limit" [rowClass]="getRowClass" [messages]="{'emptyMessage': 'Pas de données.'}"
+        [sorts]="[{prop: 'num_reservation', dir: 'desc'}]" [sortType]="sortType" (sort)="onSort($event)">
+
+        <ngx-datatable-column name="Mission" prop="num_reservation">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <a [title]="value" class="num-resv" [routerLink]="'/reservationDetails'"
+              [queryParams]="{'id': row.bookingId, index: 1}">{{value}}</a>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Nom Fuite" prop="leakName">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span> {{value}}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Capture" prop="leakImgUrl" [sortable]="false">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <img [src]="value" width="25" height="25">
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Cout (€ /an)" prop="leakCost">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>{{value | number:'1.0-2':'fr'}}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Action" prop="actionDesc">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>{{value}}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Pilote" prop="actionPilote">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span> {{value}}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Date Cible" prop="actionDelai">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>{{toDate(value)}}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Coût Réparation (€)" prop="actionCost">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>{{value | number:'1.0-2':'fr'}}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="Statut" prop="actionStatut">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span>{{value}}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="" prop="_id" [sortable]="false">
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <button *ngIf="currentUserId == row._id || isAdmin" class="edit-action-btn"
+              (click)="openEditActionDialog($event, row)" title="Éditer">
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
+    </div>
+  </div>
+
+<div #htmlData>
+</div>

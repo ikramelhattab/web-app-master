@@ -1,0 +1,57 @@
+.container-fluid {
+  padding-bottom: 20px;
+}
+
+.new-peri-btn {
+  border: none;
+  padding: 10px 20px;
+  background: linear-gradient(270deg, #4d82c2 27.81%, #4377b8 43.71%, #2e5d9e 95.63%);
+  text-transform: capitalize;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.95;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.peri-table-container {
+  margin-top: 10px;
+}
+
+.plan-img {
+  height: 35px;
+  width: 35px;
+  padding: 5px;
+  border: 1px solid rgb(85, 84, 84);
+  border-radius: 5px;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+
+
+
+
+.edit-btn {
+  background: none;
+  border: none;
+  color: rgba(82, 86, 104, 1);
+}
+
+:host ::ng-deep {
+  .user-row {
+    border-top: 1px solid #e7e9eb;
+  }
+  .datatable-body {
+      height: auto !important;
+  }
+}

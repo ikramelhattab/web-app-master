@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url("https://fonts.googleapis.com/css2?family=Inria+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~ol/ol.css";
+@import "angular-calendar/css/angular-calendar.css";
+
+/* ngx-datatable */
+@import "~@swimlane/ngx-datatable/index.css";
+@import "~@swimlane/ngx-datatable/themes/material.css";
+@import "~@swimlane/ngx-datatable/assets/icons.css";
+@import "~@swimlane/ngx-datatable/themes/bootstrap.css";
+
+/* Toasts */
+@import '~ngx-toastr/toastr';
+// @import '~ngx-toastr/toastr-bs4-alert';
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: "Inria Sans", sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Inria Sans", sans-serif !important;
+}

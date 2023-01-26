@@ -1,0 +1,109 @@
+<mat-sidenav-container autosize>
+
+    <mat-sidenav #sideNav [mode]="modeMenu" [fixedInViewport]="true" [opened]="showMenu">
+
+        <div class="sidenav-content">
+            <img class="logo-img" src="assets/logo.png">
+
+            <div class="user-info text-center">
+                <img class="avatar" src="assets/avatar.png">
+                <div class="name">{{userFirstName}} {{userLastName}}</div>
+                <div class="email" [title]="userEmail">{{userEmail}}</div>
+            </div>
+
+            <hr class="seperator" style="margin-bottom: 30px;">
+
+            <mat-nav-list>
+                <!-- Reservations - missions -->
+                <a mat-list-item class="mat-list-item" [routerLink]="['/bookings']" routerLinkActive
+                    #reservation="routerLinkActive"
+                    [ngClass]="{'link-active': reservationDetails.isActive || addBooking.isActive || reservation.isActive}">
+                    Réservations - Missions
+                </a>
+                <a mat-list-item class="mat-list-item" [routerLink]="'/reservationDetails'" routerLinkActive
+                    #reservationDetails="routerLinkActive" style="display: none;"></a>
+                <a mat-list-item class="mat-list-item" [routerLink]="'/addBooking'" routerLinkActive
+                    #addBooking="routerLinkActive" style="display: none;"></a>
+
+                <!-- Fuites -->
+                <a mat-list-item class="mat-list-item" [routerLink]="'/leaks'" routerLinkActive="link-active">
+                    Fuites
+                </a>
+
+                <!-- Actions -->
+                <a mat-list-item  class="mat-list-item" [routerLink]="'/actions'"
+                    routerLinkActive="link-active">
+                    Actions
+                </a>
+
+                <!-- Gains -->
+                <a mat-list-item class="mat-list-item" [routerLink]="'/gain'" routerLinkActive="link-active">
+                    Gains
+                </a>
+
+                <!-- Parameters -->
+                <hr class="seperator" style="margin-top: 30px; margin-bottom: 30px;">
+
+                <a *ngIf="isUserAdmin" mat-list-item class="mat-list-item" [routerLink]="'/users-settings'"
+                    routerLinkActive="link-active">
+                    Gestion utilisateurs
+                </a>
+
+                <a *ngIf="isUserAdmin" mat-list-item class="mat-list-item" [routerLink]="'/perimeters'"
+                    routerLinkActive="link-active">
+                    Périmètres
+                </a>
+
+                <a *ngIf="isUserAdmin" mat-list-item class="mat-list-item" [routerLink]="'/equipements'"
+                    routerLinkActive="link-active">
+                    Equipements
+                </a>
+
+                <a *ngIf="isUserAdmin" mat-list-item class="mat-list-item" [routerLink]="'/typeEquipement'"
+                    routerLinkActive="link-active">
+                    Type d'équipement
+                </a>
+
+                <a *ngIf="isUserAdmin" mat-list-item class="mat-list-item" [routerLink]="'/typesMission'"
+                    routerLinkActive="link-active">
+                    Types de Mission
+                </a>
+
+                <a *ngIf="isUserAdmin" mat-list-item class="mat-list-item" [routerLink]="'/FrequenceControle'"
+                    routerLinkActive="link-active">
+                    Fréquence de Contrôle
+                </a>
+            </mat-nav-list>
+
+            <div class="side-nav-footer">
+                <hr class="seperator">
+                <a mat-list-item class="mat-list-item" routerLinkActive="link-active" (click)="logOut()">
+                    <div class="title-nav">
+                        <i class="fa-solid fa-power-off"></i> &nbsp;&nbsp; Déconnecter
+                    </div>
+                </a>
+            </div>
+        </div>
+    </mat-sidenav>
+
+
+
+    <mat-sidenav-content>
+        <mat-toolbar>
+            <mat-toolbar-row>
+                <button class="toggle-menu" (click)="showMenu = !showMenu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="app-title">{{pageTitle}}</div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <div class="app-body">
+            <main class="main">
+                <div class="container-fluid">
+                    <router-outlet></router-outlet>
+                </div>
+            </main>
+        </div>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

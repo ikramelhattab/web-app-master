@@ -1,0 +1,9 @@
+<div mat-dialog-title class="d-flex justify-content-between">
+    <h1>{{data.code}}</h1>
+    <span class="times" (click)="onCancelClick($event)">&times;</span>
+</div>
+<div mat-dialog-content>
+    <lib-ngx-image-zoom [thumbImage]="data.thumbUrl" [fullImage]="data.photoUrl" [magnification]="0.3"
+        [enableScrollZoom]="false" [enableLens]="true" [lensWidth]="200" [lensHeight]="150">
+    </lib-ngx-image-zoom>
+</div>

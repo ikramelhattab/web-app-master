@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <!-- <form  [formGroup]="editForm" (keyup)="onKey($event)"> -->
+
+    <div class="d-flex justify-content-start">
+        <div class="align-self-center horizon-info">
+            Horizon de génération des actions de Contrôle (mois)
+        </div>
+        <div>
+            <input type="number" [disabled]="id === ''" [(ngModel)]="horizon" (ngModelChange)="onHorizonChange($event)"
+                class="input-horizon">
+        </div>
+
+    </div>
+
+
+    <table ng-template pTemplate="header" class="table">
+        <thead style="background-color:#ecedf8">
+            <tr style="color: rgb(20, 20, 22)">
+                <th>Palier de cout de la fuite </th>
+                <th>Fréquence de Contrôle (mois)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>0-100€ /an </td>
+                <td><input type="number" [disabled]="id === ''" class="input" [(ngModel)]="freq0_100"
+                        (ngModelChange)="on0To100Change($event)">
+                </td>
+            </tr>
+            <tr>
+                <td>100€ - 500€ /an </td>
+                <td><input type="number" [disabled]="id === ''" class="input" [(ngModel)]="freq100_500"
+                        (ngModelChange)="on100To500Change($event)"></td>
+            </tr>
+            <tr>
+                <td>500€ - 1500€ /an </td>
+                <td><input type="number" [disabled]="id === ''" class="input" [(ngModel)]="freq500_1500"
+                        (ngModelChange)="on500To1500Change($event)"></td>
+            </tr>
+            <tr>
+                <td> > 1500€ / an </td>
+                <td><input type="number" [disabled]="id === ''" class="input" [(ngModel)]="freq1500"
+                        (ngModelChange)="onSup1500Change($event)"></td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- </form> -->
+</div>

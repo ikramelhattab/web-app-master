@@ -1,0 +1,54 @@
+<div mat-dialog-title class="d-flex justify-content-between">
+    <h1>Action de la fuite {{data[0]}}</h1>
+    <span class="times" (click)="onCancelClick($event)">&times;</span>
+</div>
+<form *ngIf="actionForm" [formGroup]="actionForm">
+    <div mat-dialog-content>
+
+        <!-- Pilote -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-pilote">Pilote* </label>
+            <input type="text" class="form-control" id="input-pilote" name="input-pilote" required placeholder=""
+                formControlName="formPilote">
+        </div>
+
+        <!-- Delais -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-delais"> Délais / Date cible* </label>
+            <input type="date" class="form-control" id="input-delais" name="input-delais" required placeholder=""
+                formControlName="formDelais">
+        </div>
+
+        <!-- Descriptif -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-desc">Descriptif action*</label>
+            <input type="text" class="form-control" id="input-desc" name="input-desc" required placeholder=""
+                formControlName="formDesc">
+        </div>
+
+        <!-- Cout -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-cout">Cout réparation*</label>
+            <input type="number" class="form-control" id="input-cout" name="input-cout" required placeholder=""
+                formControlName="formCout">
+        </div>
+
+        <!-- formStatut -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-cout">Statut*</label>
+            <select id="select-formStatut" name="select-statut" required formControlName="formStatut">
+                <option [value]="'En cours'">En cours</option>
+                <option [value]="'Clôturé'">Clôturé</option>
+            </select>
+        </div>
+
+    </div>
+
+    <div mat-dialog-actions align="end">
+        <button type="button" class="cancel-btn" (click)="onCancelClick($event)">Annuler</button>
+        <button type="submit" class="confirm-btn" (click)="onConfirmClick()">
+            Valider
+        </button>
+
+    </div>
+</form>

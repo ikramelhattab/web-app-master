@@ -1,0 +1,104 @@
+mat-toolbar {
+    color: rgba(23, 38, 79, 1);
+    background-color: white;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.25rem;
+    padding-left: 10px;
+    padding-right: 20px !important;
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    font-family: "Inria Sans", sans-serif !important;
+}
+
+.toggle-menu {
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    color: rgba(23, 38, 79, 1);
+    margin-right: 20px;
+}
+
+mat-sidenav {
+    background-color: rgba(46, 48, 61, 1);
+    z-index: 11 !important;
+    height: 100%;
+    overflow: auto;
+    padding-bottom: 80px;
+    width: 240px;
+
+    .sidenav-content {
+        padding: 16px 6px;
+    }
+
+    .logo-img {
+        width: 120px;
+    }
+
+    .user-info {
+        margin-top: 26px;
+        margin-bottom: 30px;
+        .avatar {
+            width: 50px;
+            margin-bottom: 10px;
+        }
+        .name {
+            color: white;
+            font-weight: 900;
+            font-size: 16px;
+        }
+        .email {
+            color: white;
+            font-weight: 300;
+            font-size: 16px;
+            overflow: hidden;
+        }
+    }
+
+    .mat-list-item {
+        color: white;
+        font-size: 14px;
+        text-align: center;
+        text-transform: uppercase;
+        height: 30px;
+        letter-spacing: 1px;
+        white-space: nowrap;
+    }
+
+    .link-active {
+        background: linear-gradient(90deg, #4d82c2 15.19%, rgba(77, 130, 194, 0) 96.19%);
+        font-weight: 700;
+    }
+
+    .seperator {
+        color: white;
+    }
+
+    .side-nav-footer {
+        width: 170px;
+        position: absolute;
+        bottom: 24px;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        .mat-list-item {
+            text-decoration: none;
+            white-space: nowrap;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.app-body {
+    position: relative;
+    min-height: 100vh;
+    background-color: white;
+    .main {
+        .container-fluid {
+            padding-top: 74px;
+        }
+    }
+}

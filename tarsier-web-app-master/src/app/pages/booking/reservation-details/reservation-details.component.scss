@@ -1,0 +1,447 @@
+/*
+------------------------------
+# Devide page into 4 sections
+------------------------------
+*/
+.booking-missions-component {
+  height: 90vh;
+  min-height: 90vh;
+}
+
+.top-line {
+  height: 30%;
+  width: 100%;
+}
+
+.bookings-details-card,
+.gain-card {
+  width: 50%;
+  height: 100%;
+  float: left;
+  overflow: auto;
+}
+
+.bottom-line {
+  height: 70%;
+  width: 100%;
+}
+
+.mat-tab-container,
+.map-plan-container {
+  width: 50%;
+  height: 100%;
+  float: left;
+  overflow: auto;
+}
+
+.mat-tab-container-no-map {
+  width: 93% !important;
+}
+
+.map-plan-container-no-map {
+  width: 7% !important;
+}
+
+/*
+--------------------------------
+# Styling the top cards
+--------------------------------
+*/
+.booking-details-wrapper,
+.gain-wrapper {
+  margin: 3px 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  padding: 10px;
+  min-height: 95%;
+}
+
+.booking-details-wrapper {
+  position: relative;
+}
+
+
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.line {
+  margin: 3px 40px;
+  &:not(:last-child) {
+    border-bottom: 1px solid rgb(243, 243, 245);
+  }
+  &.stress {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+
+.prop-title {
+  color: rgb(62, 69, 100);
+}
+
+
+/*
+-----------------------------
+# For mission action staffs
+-----------------------------
+*/
+.mat-wrapper {
+  margin: 3px 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  padding: 10px;
+  height: 97%;
+  overflow: auto;
+}
+
+
+
+
+/*
+-------------------------------
+# Custom style for mat labels
+-------------------------------
+*/
+
+:host ::ng-deep {
+  .mat-tab-header {
+    border-bottom: none !important;
+  }
+  .mat-tab-labels {
+    justify-content: space-between !important;
+    display: flex !important;
+    margin-bottom: 10px;
+  }
+  .mat-tab-label {
+    color: rgba(82, 86, 104, 1) !important;
+    border: 1px solid rgba(23, 38, 79, 1);
+    border-radius: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 1 !important;
+    font-family: "Inria Sans", sans-serif !important;
+  }
+  .mat-tab-label.mat-tab-label-active {
+    color: white !important;
+    background: linear-gradient(230.93deg, #4d82c2 32.84%, #2e5d9e 87.4%) !important;
+    border: none !important;
+  }
+  .mat-ink-bar {
+    background-color: transparent !important;
+  }
+
+  .mission-container {
+    display: flex;
+    padding-bottom: 10px;
+  }
+
+  
+
+  .mission-form {
+    margin: auto;
+    margin-top: 10px;
+    .form-group-control {
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    input {
+      padding: 12px 18px;
+      border-color: rgba(23, 38, 79, 1);
+      border-radius: 10px;
+      font-size: 18px;
+      width: 100%;
+    }
+
+    /* Supress the background color of the input */
+    input:-webkit-autofill,
+    input:-webkit-autofill:focus {
+      transition: background-color 600000s 0s, color 600000s 0s;
+    }
+
+    .input-label {
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      background-color: white;
+      padding: 0px 20px 0px 10px;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 18;
+    }
+
+    label.error {
+      color: #d8392b;
+    }
+
+    input.error {
+      border-color: #d8392b;
+    }
+
+  }
+
+  .row-selected {
+    border: 2px solid #283593;
+  }
+
+  .selection {
+    opacity: 0;
+    cursor: pointer;
+    color: #283593;
+    background: #fff;
+    position: absolute;
+    right: -10px;
+    top: -10px;
+    border-radius: 100%;
+    height: 24px;
+    width: 24px;
+  }
+
+  .pointeur-img {
+    cursor: pointer;
+    opacity: 0.9;
+  }
+
+  // Custom style for the table
+  .empty-leaks {
+    margin-top: 20px;
+    font-weight: 500;
+    font-family: "Inria Sans", sans-serif !important;
+    font-size: 16px;
+  }
+  td,
+  th {
+    font-family: "Inria Sans", sans-serif !important;
+  }
+  .select-plan {
+    font-family: "Inria Sans", sans-serif !important;
+  }
+  .choose-date {
+    font-family: "Inria Sans", sans-serif !important;
+  }
+
+  // Custom style for the pagination
+  .ngx-pagination li {
+    font-family: "Inria Sans", sans-serif !important;
+  }
+  .ngx-pagination li a {
+    color: #f3f4f7 !important;
+  }
+  .ngx-pagination li a:hover {
+    color: #2199e8 !important;
+    background: transparent !important;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+}
+
+.edit-leak-btn {
+  color: rgba(82, 86, 104, 1);
+  background: none;
+  border: none;
+  font-size: 20px;
+}
+
+.delete-row-btn {
+  color: rgba(82, 86, 104, 1);
+  background: none;
+  border: none;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+
+
+
+/*
+----------------------------
+# Map style
+----------------------------
+*/
+
+.map-wrapper {
+  margin: 3px 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 10px;
+  min-height: 97%;
+  position: relative;
+}
+
+.mapContainer {
+  position: absolute;
+  border-top: 1px solid rgba(191, 194, 202, 0.418);
+  height: 100%;
+  width: 100%;
+  background: rgb(248, 246, 246);
+}
+
+
+.hide-show-btn-container {
+  position: absolute;
+  top: 20%;
+  left: 6px;
+  z-index: 50;
+  button {
+    height: 300px;
+    color: white;
+    background-color: rgba(0, 60, 136, 0.5);
+    border: none;
+    border-radius: 14px;
+    font-weight: 500;
+    &:hover {
+      background-color: rgba(0, 60, 136, 0.7);
+    }
+  }
+}
+
+
+
+.loading-markers {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.685);
+  z-index: 100;
+  .spinner-border {
+    position: absolute;
+    top: 50%;
+    right: 46%;
+    width: 30px;
+    height: 30px;
+    color: #2e5d9e;
+  }
+}
+
+.map:-webkit-full-screen {
+  height: 100%;
+  margin: 0;
+}
+.map:-ms-fullscreen {
+  height: 100%;
+}
+.map:fullscreen {
+  height: 100%;
+}
+
+// -----------------------
+// # popup related style
+// -----------------------
+.ol-popup {
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  bottom: 12px;
+  left: -50px;
+  min-width: 280px;
+}
+
+.ol-popup:after,
+.ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.ol-popup:after {
+  border-top-color: white;
+  border-width: 10px;
+  left: 48px;
+  margin-left: -10px;
+}
+
+.ol-popup:before {
+  border-top-color: #cccccc;
+  border-width: 11px;
+  left: 48px;
+  margin-left: -11px;
+}
+
+.ol-popup-closer {
+  text-decoration: none;
+  position: absolute;
+  top: 2px;
+  right: 8px;
+}
+
+.ol-popup-closer:after {
+  content: "✖";
+}
+
+.ol-popup-content {
+  padding-top: 10px;
+}
+
+.ol-popup-reset-btn {
+  color: rgba(23, 38, 79, 1);
+  padding: 2px 5px;
+  border: 1px solid rgba(23, 38, 79, 1);
+  border-radius: 14px;
+  background: none;
+  margin-top: 10px;
+  font-size: 12px;
+  &:hover {
+    background: rgb(234, 241, 253);
+  }
+}
+
+/* 
+------------------------
+# Custom file input style
+--------------------------
+ */
+.input-folder::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.input-folder::before {
+  content: "Importer dossier missions";
+  display: inline-block;
+  background: none;
+  border: none;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  color: rgba(77, 130, 194, 1);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 14px;
+  width: 100%;
+}
+
+.input-folder:hover::before {
+  opacity: 0.9;
+  text-decoration: underline;
+}
+
+.input-folder:active::before {
+  background: none;
+}
+
+
+

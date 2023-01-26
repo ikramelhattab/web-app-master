@@ -1,0 +1,149 @@
+
+
+.logo {
+    padding-top: 24px;
+    padding-left: 16px;
+}
+
+.login-container {
+    display: flex;
+    padding-bottom: 30px;
+}
+
+.login-form {
+    margin: auto;
+    max-width: 513px;
+}
+
+.title {
+    margin-top: 80px;
+    font-size: 36px;
+    font-weight: 700;
+    color: rgba(82, 86, 104, 1);
+    line-height: 40px;
+}
+
+.info {
+    margin-top: 16px;
+    font-size: 16px;    
+}
+
+form {
+    margin-top: 40px;
+    .form-group-control {
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    input {
+        padding: 12px 18px;
+        border-color: rgba(23, 38, 79, 1);
+        border-radius: 10px;
+        font-size: 18px;
+    }
+
+    /* Supress the background color of the input */
+    input:-webkit-autofill,
+    input:-webkit-autofill:focus {
+        transition: background-color 600000s 0s, color 600000s 0s;
+    }
+
+    .input-label {
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        background-color: white;
+        padding: 0px 20px 0px 10px;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 18;
+    }
+
+    label.error {
+        color: #d8392b;
+    }
+
+    input.error {
+        border-color: #d8392b;
+    }
+
+    .forgot-password {
+        a {
+            text-decoration: none;
+            color: rgba(82, 86, 104, 1);
+            font-weight: 700;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .submit-button {
+        width: 100%;
+        border: none;
+        padding: 16px 10px;
+        background: linear-gradient(270deg, #4d82c2 27.81%, #4377b8 43.71%, #2e5d9e 95.63%);
+        text-transform: uppercase;
+        color: white;
+        font-size: 20px;
+        font-weight: 900;
+        border-radius: 10px;
+        margin-top: 20px;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.95;
+        }
+        &.disabled {
+            cursor: not-allowed;
+        }
+    }
+
+    .login-error {
+        color: #d8392b;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    /* Custom checkbox style
+    Phew! Fianlly it's working */
+    .stay-in {
+        color: rgba(82, 86, 104, 1);
+        font-weight: 700;
+        display: grid;
+        grid-template-columns: 1em auto;
+        gap: 1em;
+    }
+
+    input[type="checkbox"] {
+        appearance: none;
+        background-color: #fff;
+        margin: 0;
+        font: inherit;
+        color: rgba(23, 38, 79, 1);
+        border: 1px solid rgba(23, 38, 79, 1);
+        border-radius: 6px;
+        transform: translateY(-0.075em);
+        padding: 10px 10px;
+        display: grid;
+        place-content: center;
+    }
+
+    input[type="checkbox"]::before {
+        position: absolute;
+        bottom: 20px;
+        left: 1px;
+        content: "✓";
+        font-weight: 900;
+        font-size: 26px;
+        color: rgba(23, 38, 79, 1);
+        width: 16px;
+        height: 1px;
+        transform: scale(0);
+        transform-origin: center;
+        transition: 120ms transform ease-in-out;
+    }
+
+    input[type="checkbox"]:checked::before {
+        transform: scale(1);
+    }
+}

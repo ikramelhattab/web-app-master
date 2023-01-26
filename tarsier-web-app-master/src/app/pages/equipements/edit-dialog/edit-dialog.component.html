@@ -1,0 +1,106 @@
+<div mat-dialog-title class="d-flex justify-content-between">
+    <h1>Éditer l'Equipement </h1>
+    <span class="times" (click)="onCancelClick($event)">&times;</span>
+</div>
+
+<form  [formGroup]="editForm" (ngSubmit)="onUpdate()">
+    <div *ngIf="!initialising" mat-dialog-content [ngClass]="{'danger': confirmDelete}">
+        <!-- Code -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-code">Code </label>
+            <input type="text" class="form-control" id="input-code" name="input-code" placeholder=""
+                formControlName="code">
+        </div>
+
+
+        <!-- Description -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-desc">Description</label>
+            <input type="text" class="form-control" id="input-desc" name="input-desc" placeholder=""
+                formControlName="description">
+        </div>
+
+
+        <!-- Type d'équipement -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-typeEquipId"> Type d'équipement </label>
+            <select type="text" id="input-typeEquipId" name="input-typeEquipId" placeholder=""
+                formControlName="typeEquipId">
+                <option *ngFor="let equip of typequips" [value]="equip._id">{{equip.typeEquip}}</option>
+            </select>
+        </div>
+
+        <!-- Statut -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-statut">Statut</label>
+            <select type="text" id="input-statut" name="input-statut" placeholder="" formControlName="statut">
+                <option [value]="true">Actif</option>
+                <option [value]="false">Désactivé</option>
+            </select>
+            <!-- <input type="text" class="form-control" id="input-statut" name="input-statut" placeholder=""
+                formControlName="statut"> -->
+        </div>
+
+
+        <!-- Photo -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-img">Changer la photo d'Equipement</label>
+            <input type="file" class="form-control" id="input-img" name="input-img" placeholder=""
+                (change)="onFileChange($event)">
+        </div>
+
+
+
+        <!-- Facteur -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-facteur">Facteur de conversion cout (€) vers CO2</label>
+            <input type="number" class="form-control" id="input-facteur" name="input-facteur" placeholder=""
+                formControlName="facteur">
+        </div>
+
+
+        <!-- Confirm delete -->
+        <div *ngIf="confirmDelete" class="danger-card">
+            <div class="d-flex justify-content-between">
+                <div class="danger-note align-self-center">
+                    Êtes-vous sûr de vouloir supprimer cet équipement? Veuillez noter que ça risque de supprimer tout
+                    l'historique associé.
+                </div>
+                <div>
+                    <button (click)="cancelDelete()" class="dismiss-danger-btn" [disabled]="loading">&times;</button>
+                    <button class="danger-btn" (click)="onDeleteClick($event)" [disabled]="loading">Oui, le supprimer
+                        définitivement</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wait until type equipement load into the select input -->
+    <div mat-dialog-content *ngIf="initialising">
+        <div class="text-center p-4">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div mat-dialog-actions class="d-flex justify-content-between">
+        <div>
+            <button *ngIf="!confirmDelete && !initialising" class="delete-btn" title="Supprimer le périmètre"
+                (click)="onDeleteClick($event)"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+        <div>
+            <button type="button" class="cancel-btn" (click)="onCancelClick($event)">Annuler</button>
+            <button type="submit" class="confirm-btn" [disabled]="loading || confirmDelete || initialising">
+                <span *ngIf="!loading">Valider</span>
+                <div *ngIf="loading">
+                    <div class="spinner-border" role="status" style="width: 20px; height: 20px;">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </div>
+
+</form>

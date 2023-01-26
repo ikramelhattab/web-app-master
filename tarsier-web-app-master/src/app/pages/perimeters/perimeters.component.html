@@ -1,0 +1,68 @@
+<div *ngIf="isAdmin" class="container-fluid">
+
+    <div class="d-flex justify-content-center">
+        <button class="new-peri-btn" (click)="openAddDialog()">
+            <i class="fa-solid fa-plus"></i> Nouveau périmètre
+        </button>
+    </div>
+
+    <div class="peri-table-container">
+        <ngx-datatable class="material" [rows]="perimeters" [columnMode]="ColumnMode.force" [headerHeight]="50"
+            [footerHeight]="50" rowHeight="auto" [externalPaging]="true" [externalSorting]="true" [count]="page.count"
+            [offset]="page.offset" [loadingIndicator]="periLoading" (page)="onPage($event)" [limit]="page.limit"
+            [rowClass]="getRowClass" [messages]="{'emptyMessage': 'Pas de données'}" [sortType]="sortType"
+            (sort)="onSort($event)">
+
+            <ngx-datatable-column name="Code" prop="code">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{value}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Description" prop="description">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{value}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Date de création" prop="createdOn">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{toDate(value)}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Derniére mise à jour" prop="updatedOn">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{toDate(value)}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Statut" prop="statut">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span *ngIf="value">Actif</span>
+                    <span *ngIf="!value">Désactivé</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Photo layout" prop="thumbUrl" [sortable]="false">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <div class="img-plan-container">
+                        <img class="plan-img" (click)="showPlan(row)" [src]="value">
+                    </div>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Actions" prop="id" [sortable]="false">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <button class="edit-btn" (click)="openEditDialog(row)">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+
+</div>
+<div class="container-fluid" *ngIf="!isAdmin">
+    Téléchargement...
+</div>

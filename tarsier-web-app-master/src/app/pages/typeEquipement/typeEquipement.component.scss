@@ -1,0 +1,44 @@
+
+
+
+  
+  .new-btn {
+    border: none;
+    padding: 10px 20px;
+    background: linear-gradient(270deg, #4d82c2 27.81%, #4377b8 43.71%, #2e5d9e 95.63%);
+    text-transform: capitalize;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+  
+    &:hover {
+      cursor: pointer;
+      opacity: 0.95;
+    }
+  
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+  
+  .Typequip-table-container {
+    margin-top: 10px;
+  }
+  
+  :host ::ng-deep {
+    .typeequi-row {
+      border-top: 1px solid #e7e9eb;
+    }
+    .datatable-body {
+        min-height: 434px !important;
+    }
+
+  
+    .edit-tyEquip-btn {
+        background: none;
+        border: none;
+        color: rgba(82, 86, 104, 1);
+    }
+  
+  }

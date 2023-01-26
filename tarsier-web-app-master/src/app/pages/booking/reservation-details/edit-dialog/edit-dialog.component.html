@@ -1,0 +1,106 @@
+<div mat-dialog-title class="d-flex justify-content-between">
+    <h1>Éditer la fuite {{data[0]}}</h1>
+    <span class="times" (click)="onCancelClick($event)">&times;</span>
+</div>
+
+<form *ngIf="editForm" [formGroup]="editForm">
+    <div mat-dialog-content>
+        <!-- Leak name -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-name" [ngClass]="{'error': 
+            (f?.name?.touched && f?.name?.errors?.required)}">Nom de la fuite* </label>
+            <input type="text" class="form-control" id="input-name" name="input-name" required placeholder=""
+                formControlName="name" [ngClass]="{'error': 
+            (f?.name?.touched && f?.name?.errors?.required)}">
+            <label class="error ms-2" *ngIf="f?.name?.touched && f?.name?.errors?.required">Ce champ
+                est obligatoire</label>
+        </div>
+
+        <!-- Leak date -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group-control">
+                    <label class="input-label" for="input-day" [ngClass]="{'error': 
+                    (f?.day?.touched && f?.day?.errors?.required)}">Date de la fuite* </label>
+                    <input type="date" class="form-control" id="input-day" name="input-day" required placeholder=""
+                        formControlName="day" [ngClass]="{'error': 
+                    (f?.day?.touched && f?.day?.errors?.required)}">
+                    <label class="error ms-2" *ngIf="f?.day?.touched && f?.day?.errors?.required">Ce champ
+                        est obligatoire</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group-control">
+                    <label class="input-label" for="input-time" [ngClass]="{'error': 
+                    (f?.time?.touched && f?.time?.errors?.required)}">Heure de la fuite* </label>
+                    <input type="time" class="form-control" id="input-time" name="input-time" required placeholder=""
+                        formControlName="time" [ngClass]="{'error': 
+                    (f?.time?.touched && f?.time?.errors?.required)}">
+                    <label class="error ms-2" *ngIf="f?.time?.touched && f?.time?.errors?.required">Ce champ
+                        est obligatoire</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gain & db RMS -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group-control">
+                    <label class="input-label" for="input-gain">Gain (DB) </label>
+                    <input type="number" class="form-control" id="input-gain" name="input-gain" placeholder=""
+                        formControlName="gain">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group-control">
+                    <label class="input-label" for="input-dbRms">db RMS </label>
+                    <input type="number" class="form-control" id="input-dbRms" name="input-dbRms" placeholder=""
+                        formControlName="dbRms">
+                </div>
+            </div>
+        </div>
+
+        <!-- K & Flow-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group-control">
+                    <label class="input-label" for="input-k">K </label>
+                    <input type="number" class="form-control" id="input-k" name="input-k" placeholder="" formControlName="k">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group-control">
+                    <label class="input-label" for="input-flow">Flow </label>
+                    <input type="number" class="form-control" id="input-flow" name="input-flow" placeholder=""
+                        formControlName="flow">
+                </div>
+            </div>
+        </div>
+
+        <!-- Cout & Currency -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group-control">
+                    <label class="input-label" for="input-cout">Cout </label>
+                    <input type="number" class="form-control" id="input-cout" name="input-cout" placeholder=""
+                        formControlName="cout">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group-control">
+                    <label class="input-label" for="input-currency">Currency </label>
+                    <input type="text" class="form-control" id="input-currency" name="input-currency" placeholder=""
+                        formControlName="currency">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div mat-dialog-actions align="end">
+        <button type="button" class="cancel-btn" (click)="onCancelClick($event)">Annuler</button>
+        <button type="submit" class="confirm-btn" [disabled]="editForm?.invalid" (click)="onConfirmClick()">
+            Valider
+        </button>
+    </div>
+</form>

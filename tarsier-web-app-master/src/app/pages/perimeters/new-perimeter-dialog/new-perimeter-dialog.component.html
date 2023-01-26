@@ -1,0 +1,70 @@
+<div mat-dialog-title class="d-flex justify-content-between">
+    <h1>Ajouter Un Nouveau Périmètre </h1>
+    <span class="times" (click)="onCancelClick($event)">&times;</span>
+</div>
+<form *ngIf="periForm" [formGroup]="periForm" (ngSubmit)="onSubmit()">
+
+    <div mat-dialog-content>
+        <!-- Code -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-code" [ngClass]="{'error': 
+            (f?.code?.touched && f?.code?.errors?.required)}">Code* </label>
+            <input type="text" class="form-control" id="input-code" name="input-code" placeholder=""
+                formControlName="code" [ngClass]="{'error': 
+                (f?.code?.touched && f?.code?.errors?.required)}">
+            <label class="error ms-2" *ngIf="f?.code?.touched && f?.code?.errors?.required" required>Ce champ
+                est obligatoire</label>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-desc" [ngClass]="{'error': 
+            (f?.description?.touched && f?.description?.errors?.required)}">Description*</label>
+            <input type="text" class="form-control" id="input-desc" name="input-desc" placeholder=""
+                formControlName="description" [ngClass]="{'error': 
+                (f?.description?.touched && f?.description?.errors?.required)}" required>
+            <label class="error ms-2" *ngIf="f?.description?.touched && f?.description?.errors?.required">Ce champ
+                est obligatoire</label>
+        </div>
+
+        <!-- Statut -->
+        <div class="form-group-control">
+            <label class="input-label" for="select-statut" [ngClass]="{'error': 
+            (f?.statut?.touched && f?.statut?.errors?.required)}">Statut*</label>
+            <select id="select-statut" name="select-statut" required formControlName="statut" [ngClass]="{'error': 
+            (f?.statut?.touched && f?.statut?.errors?.required)}">
+                <option [value]="true">Actif</option>
+                <option [value]="false">Désactivé</option>
+            </select>
+            <label class="error ms-2" *ngIf="f?.statut?.touched && f?.statut?.errors?.required">Ce champ
+                est obligatoire</label>
+        </div>
+
+        <!-- Photo -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-img" [ngClass]="{'error': 
+            (f?.photoUrl?.touched && f?.photoUrl?.errors?.required)}">Photo du plan*</label>
+            <input type="file" class="form-control"
+                [ngClass]="{'error': (f?.photoUrl?.touched && f?.photoUrl?.errors?.required)}"
+                (change)="onFileChange($event)" accept="application/pdf,image/png">
+            <input #hiddenFileInput type="hidden" class="form-control" id="input-hidden" name="input-hidden" required
+                placeholder="" name="fileHidden" formControlName="photoUrl">
+            <label class="error ms-2" *ngIf="f?.photoUrl?.touched && f?.photoUrl?.errors?.required">Ce champ
+                est obligatoire</label>
+        </div>
+    </div>
+
+    <div mat-dialog-actions align="end">
+        <button type="button" class="cancel-btn" (click)="onCancelClick($event)">Annuler</button>
+        <button type="submit" [disabled]="loading" [ngClass]="{'disabled': periForm?.invalid || loading}"
+            class="confirm-btn">
+            <span *ngIf="!loading">Valider</span>
+            <div *ngIf="loading">
+                <div class="spinner-border" role="status" style="width: 20px; height: 20px;">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </button>
+    </div>
+
+</form>

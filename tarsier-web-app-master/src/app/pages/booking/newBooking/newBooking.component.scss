@@ -1,0 +1,63 @@
+h3 {
+  margin: 0 0 10px;
+}
+
+pre {
+  background-color: #f5f5f5;
+  padding: 15px;
+}
+
+.bookings-component {
+  padding-bottom: 40px;
+}
+
+.navigate-calendar-btn {
+  font-size: 16px;
+  background: linear-gradient(230.93deg, #4d82c2 32.84%, #2e5d9e 87.4%);
+  color: white;
+  font-weight: 600;
+  border-radius: 14px;
+  border: 1px solid #4d82c2;
+  padding: 10px 8px;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
+}
+
+.today-calendar-btn {
+  font-size: 16px;
+  color: rgba(82, 86, 104, 1);
+  font-weight: 600;
+  border-radius: 14px;
+  border: 1px solid rgba(82, 86, 104, 1);
+  padding: 10px 8px;
+  margin: 0px 4px;
+  &:hover {
+    cursor: pointer;
+    background: #c8d9ee;
+  }
+}
+
+.set-calendar-view-btn {
+  font-size: 16px;
+  color: rgba(82, 86, 104, 1);
+  font-weight: 600;
+  border-radius: 14px;
+  border: 1px solid rgba(82, 86, 104, 1);
+  padding: 10px 8px;
+  margin: 0px 2px;
+  &:hover {
+    cursor: pointer;
+    background: linear-gradient(230.93deg, #4d82c2 32.84%, #2e5d9e 87.4%);
+    opacity: 0.9;
+    color: white;
+  }
+  &.active {
+    background: linear-gradient(230.93deg, #4d82c2 32.84%, #2e5d9e 87.4%);
+    color: white;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

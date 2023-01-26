@@ -1,0 +1,297 @@
+<div class="booking-missions-component">
+    <div class="top-line">
+
+        <!-- 
+        ==================
+        # Card staffs 
+        ================== -->
+        <div class="col-md-6 bookings-details-card">
+            <!-- *ngIf="booking" -->
+            <div class="booking-details-wrapper">
+                <div *ngIf="booking">
+                    <div class="card-title">{{booking.num_reservation}}</div>
+                    <div class="d-flex justify-content-between line">
+                        <div class="prop-title">
+                            Type
+                        </div>
+                        <div class="prop-info">
+                            {{ this.typeMission.typeMission}}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between line">
+                        <div class="prop-title">
+                            Initiateur
+                        </div>
+                        <div class="prop-info">
+                            {{this.createdBy.firstName}} {{this.createdBy.lastName}}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between line">
+                        <div class="prop-title">
+                            Responsable
+                        </div>
+                        <div class="prop-info">
+                            {{this.userId.firstName}} {{this.userId.lastName}}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between line">
+                        <div class="prop-title">
+                            Périmètre
+                        </div>
+                        <div class="prop-info">
+                            {{this.periCode}}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between line">
+                        <div class="prop-title">
+                            Date début
+                        </div>
+                        <div class="prop-info">
+                            {{toDate(booking.start)}}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between line">
+                        <div class="prop-title">
+                            Statut
+                        </div>
+                        <div class="prop-info">
+                            {{statut}}
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="loadingBookingDetails" class="loading-markers">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- 
+        ================ 
+        # Gain stuffs
+        ================ -->
+        <div class="col-md-6 gain-card">
+            <div class="gain-wrapper">
+                <div class="card-title">Calcul</div>
+                <div class="d-flex justify-content-between line">
+                    <div class="prop-title">
+                        Valeur fuite
+                    </div>
+                    <div class="prop-info">
+                        {{ costLeak | number:'1.0-2':'fr'}} Euro
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between line">
+                    <div class="prop-title">
+                        Cout actions
+                    </div>
+                    <div class="prop-info">
+                        {{ costAction | number:'1.0-2':'fr'}} Euro
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between line stress">
+                    <div class="prop-title">
+                        <i style="color: #1b34d8;" class="fa-solid fa-dollar-sign"></i> Gain
+                    </div>
+                    <div class="prop-info">
+                        {{ totalGain | number:'1.0-2':'fr'}} Euro
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between line stress">
+                    <div class="prop-title">
+                        <i style="color: rgb(3, 184, 3);" class="fa-solid fa-leaf"></i> Gain CO2
+                    </div>
+                    <div class="prop-info">
+                        <span>{{ totalGainCo2| number:'1.0-2':'fr'}} Kg CO2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="bottom-line">
+        <!-- 
+        =================== 
+        # Leaks and actions
+        =================== -->
+        <div class="col-md-6 mat-tab-container" [ngClass]="{'mat-tab-container-no-map': !isMapCollapsed}">
+            <div class="mat-wrapper">
+                <mat-tab-group (selectedIndexChange)="onTabChange($event)" #matTabGroup
+                    [selectedIndex]="selectedTabIndex">
+                    <!--
+                    ===============
+                    # Leaks
+                    ===============
+                    -->
+                    <mat-tab label="CHARGER DONNEES">
+                        <div class="mission-container">
+                            <form class="mission-form">
+
+                                <div class="form-group-control">
+                                    <input [disabled]="uploadingMissionFolder" #folderInput type="file"
+                                        class="input-folder" (change)="filesPicked($any(folderInput.files))"
+                                        webkitDirectory required>
+                                </div>
+
+                                <!-- Table of the uploaded fuites-->
+                                <div *ngIf="uploadingMissionFolder" class="text-center mb-4">
+                                    <div class="spinner-border" role="status"
+                                        style="width: 30px; height: 30px; color: #2e5d9e;">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <div class="uploading-missions-info">
+                                        <div>Veuillez patienter, chargement de dossier des fuites en cours...</div>
+                                        <div><small>Selon la taille de vos fichiers, cette opération peut prendre
+                                                quelques minutes.</small></div>
+                                    </div>
+
+                                </div>
+                                <table *ngIf="csvRowsArray.length !== 0 && !uploadingMissionFolder" mat-table
+                                    class="table" cellspacing="0" width="100%">
+                                    <span class="selection">
+                                        <mat-icon>check_circle</mat-icon>
+                                    </span>
+                                    <thead>
+                                        <tr>
+                                            <th mat-header-cell>Date</th>
+                                            <th mat-header-cell>Image</th>
+                                            <th mat-header-cell>Nom de la fuite</th>
+                                            <th mat-header-cell>Cout fuite </th>
+                                            <th mat-header-cell>Pointeur </th>
+                                            <th mat-header-cell></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr *ngFor="let item of csvRowsArray; let i = index" (click)="onSelectCard(i)"
+                                            [ngClass]="{'row-selected mat-elevation-z4': item[10]} ">
+                                            <td mat-cell>{{item[1]}}</td>
+                                            <td mat-cell><img [src]="item[8]" width="25" height="25"></td>
+                                            <td mat-cell>{{item[0]}}</td>
+                                            <td mat-cell> {{item[6] | number:'1.0-2':'fr'}} {{item[7]}}</td>
+                                            <td mat-cell *ngIf="item[18]">
+                                                <img class="pointeur-img" title="Voir l'emplacement"
+                                                    (click)="onSelectPointeur(item,i, $event)"
+                                                    [src]="'assets/invalid-pin.png'" width="25" height="25">
+                                            </td>
+                                            <td mat-cell *ngIf="!item[18]"></td>
+                                            <td mat-cell>
+                                                <div class="d-flex justify-content-start">
+                                                    <button title="Editer la fuite" class="edit-leak-btn"
+                                                        (click)="openEditLeakDialog($event, item, i)">
+                                                        <i class="fa-solid fa-pen"></i>
+                                                    </button>
+                                                    <button title="Supprimer" class="delete-row-btn"
+                                                        (click)="deleteRow($event, i)">
+                                                        <i class="fa-solid fa-trash-can"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                    </mat-tab>
+
+                    <!--
+                    ===========
+                    # Actions
+                    ===========
+                    -->
+                    <mat-tab class="historique-button" label="AJOUTER ACTION">
+                        <div class="d-flex justify-content-center">
+                            <div class="card-body">
+                                <div *ngIf="uploadingMissionFolder" class="text-center mb-4">
+                                    <div class="spinner-border" role="status"
+                                        style="width: 30px; height: 30px; color: #2e5d9e;">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                                <div *ngIf="csvRowsArray.length == 0 && !uploadingMissionFolder"
+                                    class="text-center mt-4">
+                                    <div>Veuillez uploader le dossier des missions pour avoir des actions</div>
+                                </div>
+                                <table *ngIf="csvRowsArray.length !== 0 && !uploadingMissionFolder" mat-table
+                                    class="table" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th mat-header-cell>Nom fuite</th>
+                                            <th mat-header-cell>Capture</th>
+                                            <th mat-header-cell>Cout ($/an)</th>
+                                            <th mat-header-cell>Action</th>
+                                            <th mat-header-cell>Pilote</th>
+                                            <th mat-header-cell>Date Cible</th>
+                                            <th mat-header-cell>Cout Reparation</th>
+                                            <th mat-header-cell>Statut</th>
+                                            <th mat-header-cell></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let row of csvRowsArray; let i = index">
+                                            <td mat-cell>{{row[0]}}</td>
+                                            <td mat-cell><img [src]="row[8]" width="25" height="25"></td>
+                                            <td mat-cell> {{row[6] | number:'1.0-2':'fr'}} {{row[7]}}</td>
+                                            <td>{{row[15]}}</td>
+                                            <td>{{row[13]}} </td>
+                                            <td>{{row[14]}}</td>
+                                            <td>{{row[16] | number:'1.0-2':'fr'}}</td>
+                                            <td>{{row[17]}}</td>
+                                            <td mat-cell>
+                                                <div class="d-flex justify-content-start">
+                                                    <button title="Ajouter action - réparation" class="edit-leak-btn"
+                                                        (click)="openActionDialog($event, row, i)">
+                                                        <i class="fa-solid fa-pen"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+
+        </div>
+
+        <!-- 
+        ============================================
+        # Map Plan container 
+        ============================================ -->
+        <div class="col-md-6 map-plan-container" [ngClass]="{'map-plan-container-no-map': !isMapCollapsed}">
+
+            <div class="map-wrapper">
+                <!-- Hide show map -->
+                <div class="hide-show-btn-container">
+                    <button (click)="onCollapseBarClicked()" class="hide-show-btn">
+                        <i *ngIf="!isMapCollapsed" class="fa-solid fa-chevron-left"></i>
+                        <i *ngIf="isMapCollapsed" class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+                <!-- The map -->
+                <div #mapContainer class="mapContainer">
+                    <div *ngIf="loadingBookingDetails" class="loading-markers">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- The popup -->
+                <div #mapPopup class="ol-popup">
+                    <a href="#" #closePopup class="ol-popup-closer"></a>
+                    <div #popupContent class="ol-popup-content"></div>
+                    <div class="d-flex justify-content-between">
+                        <button #popupReset class="ol-popup-reset-btn">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+::ng-deep {
+    .error-alert .mat-dialog-container {
+        background: #d8392b !important;
+        color: white !important;
+    }
+    .success-alert .mat-dialog-container {
+        background: rgb(66, 180, 66);
+        color: white !important;
+    }
+}

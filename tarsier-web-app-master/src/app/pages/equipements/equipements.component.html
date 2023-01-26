@@ -1,0 +1,70 @@
+<div *ngIf="isAdmin" class="container-fluid">
+
+    <div class="d-flex justify-content-center">
+        <button class="add-equip-btn" type="submit" (click)="dialog()">
+            <i class="fa-solid fa-plus"></i> nouveau équipement
+        </button>
+    </div>
+
+    <div class="equip-table-container">
+
+        <ngx-datatable class="material" [rows]="equipements" [columnMode]="ColumnMode.force" [headerHeight]="50"
+            [footerHeight]="50" rowHeight="auto" [externalPaging]="true" [externalSorting]="true" [count]="page.count"
+            [offset]="page.offset" [limit]="page.limit" [loadingIndicator]="equipListLoading" (page)="onPage($event)"
+            [limit]="page.limit" [rowClass]="getRowClass" [messages]="{'emptyMessage': 'Pas de données.'}"
+            [sorts]="[{prop: 'code', dir: 'desc'}]" [sortType]="sortType" (sort)="onSort($event)">
+
+
+            <ngx-datatable-column name="Code" prop="code">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{value}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Description" prop="description">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{value}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Type d'équipement" prop="typeEquipId">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span> {{value.typeEquip}}</span>
+                    <!-- value.typeEquip -->
+                </ng-template>
+            </ngx-datatable-column>
+
+
+            <ngx-datatable-column name="Statut" prop="statut">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span *ngIf="value">Actif</span>
+                    <span *ngIf="!value">Désactivé</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Photo" prop="photoUrl" [sortable]="false">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <img class="eqp-img" height="25" width="25" [src]="value" (click)="onEqpImgClick(row)">
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Facteur" prop="facteur">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <span>{{value}}</span>
+                </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="Actions" prop="id" [sortable]="false">
+                <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                    <button class="edit-btn" (click)="Editdialog(row)" title="Éditer">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                </ng-template>
+            </ngx-datatable-column>
+        </ngx-datatable>
+    </div>
+</div>
+
+<div class="container-fluid" *ngIf="!isAdmin">
+    Téléchargement...
+</div>

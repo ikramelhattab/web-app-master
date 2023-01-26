@@ -1,0 +1,66 @@
+<div class="container-fluid">
+
+
+    <!-- ==============
+         Filter stuffs 
+        =============== -->
+        <div class="filter-element row">
+
+
+            <div class="col-md-6">
+                <div class="date-input-wrapper">
+                    <label class="input-label">Date de début</label>
+                    <input type="date"  [(ngModel)]="choosenStartDate" (ngModelChange)="onStartDateChange()"
+                        class="choose-date" name="choose-date" id="choose-date">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="date-input-wrapper">
+                    <label class="input-label">Date de fin</label>
+                    <input type="date" [(ngModel)]="choosenEndDate" (ngModelChange)="onEndDateChange()" 
+                        class="choose-date" name="choose-date" id="choose-date">
+                </div>
+            </div>
+     
+
+    </div>
+
+    <div class="row gain-graphic-container" style="width:1000px;">
+        <!-- ===============
+             Gain Chart
+            ================ -->
+        <div class="col-md-12" >
+            <div class="text-center chart-title">Gain en kWH</div>
+            <div *ngIf="emptyData" class="noChartData text-center">Pas des données pour cet filtre</div>
+            <div *ngIf="loadingChart" class="chart-loading">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div *ngIf="!loadingChart" class="chart-wrapper">
+                <canvas baseChart [datasets]="gainChartDataSets" [labels]="gainChartLabels" [options]="gainChartOptions"
+                    [colors]="gainChartColours" [legend]="gainChartLegend" [chartType]="'bar'"
+                    [plugins]="gainChartPlugins">
+                </canvas>
+            </div>
+        </div>
+        <!-- ============== 
+            CO2 Chart
+            =============== -->
+        <div class="col-md-12" >
+            <div class="text-center chart-title">Emission CO2</div>
+            <div *ngIf="emptyData" class="noChartData text-center">Pas des données pour cet filtre</div>
+            <div *ngIf="loadingChart" class="chart-loading">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div *ngIf="!loadingChart" class="chart-wrapper">
+                <canvas baseChart [datasets]="gainChartDataSets" [labels]="gainChartLabels" [options]="gainChartOptions"
+                [colors]="gainChartColours" [legend]="gainChartLegend" [chartType]="'bar'"
+                [plugins]="gainChartPlugins">
+            </canvas>
+            </div>
+        </div>
+    </div>
+</div>

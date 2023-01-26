@@ -1,0 +1,79 @@
+<div mat-dialog-title class="d-flex justify-content-between">
+    <h1>Ajouter Un Utilisateur</h1>
+    <span class="times" (click)="onCancelClick()">&times;</span>
+</div>
+
+<div mat-dialog-content>
+    <form *ngIf="addUserForm" [formGroup]="addUserForm">
+
+        <!-- Last Name -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-lastName" [ngClass]="{'error': 
+                     (f?.formLastName?.touched && f?.formLastName?.errors?.required)}">Nom* </label>
+            <input type="text" class="form-control" id="input-lastName" name="input-lastName" required placeholder=""
+                formControlName="formLastName" [ngClass]="{'error': 
+                 (f?.formLastName?.touched && f?.formLastName?.errors?.required)}">
+            <label class="error ms-2" *ngIf="f?.formLastName?.touched && f?.formLastName?.errors?.required">Ce champ
+                est obligatoire</label>
+        </div>
+
+        <!-- First Name -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-firstName" [ngClass]="{'error': 
+                     (f?.formFirstName?.touched && f?.formFirstName?.errors?.required)}">Prénom* </label>
+            <input type="text" class="form-control" id="input-firstName" name="input-firstName" required placeholder=""
+                formControlName="formFirstName" [ngClass]="{'error': 
+                 (f?.formFirstName?.touched && f?.formFirstName?.errors?.required)}">
+            <label class="error ms-2" *ngIf="f?.formFirstName?.touched && f?.formFirstName?.errors?.required">Ce champ
+                est obligatoire</label>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group-control">
+            <label class="input-label" for="input-email" [ngClass]="{'error': 
+                    (f?.formEmail?.touched && f?.formEmail?.errors?.pattern) 
+                    || (f?.formEmail?.touched && f?.formEmail?.errors?.required)}">E-MAIL* </label>
+            <input type="email" class="form-control" pattern=".+@.+\..+" id="input-email" name="input-email" required
+                placeholder="" formControlName="formEmail" autocomplete="email" [ngClass]="{'error': 
+                        (f?.formEmail?.touched && f?.formEmail?.errors?.pattern) 
+                        || (f?.formEmail?.touched && f?.formEmail?.errors?.required)}">
+            <label class="error ms-2" *ngIf="f?.formEmail?.touched && f?.formEmail?.errors?.pattern">Email non
+                valide</label>
+            <label class="error ms-2" *ngIf="f?.formEmail?.touched && f?.formEmail?.errors?.required">Ce champ
+                est obligatoire</label>
+        </div>
+
+        <!-- Password -->
+        <!-- <div class="form-group-control">
+            <label class="input-label" for="input-password" [ngClass]="{'error': 
+                (f?.formPassword?.touched && f?.formPassword?.errors?.pattern) 
+                || (f?.formPassword?.touched && f?.formPassword?.errors?.required)}">Mot de passe* </label>
+            <input [type]="showPassword? 'text' : 'password'" class="form-control password" id="input-password"
+                name="input-password" required placeholder="" formControlName="formPassword" autocomplete="new-password"
+                [ngClass]="{'error': 
+                (f?.formPassword?.touched && f?.formPassword?.errors?.required) 
+                || (f?.formPassword?.touched && f?.formPassword?.errors?.pattern)}">
+            <label class="error ms-2" *ngIf="f?.formPassword?.touched && f?.formPassword?.errors?.required">Ce
+                champ est obligatoire</label>
+            <label class="error ms-2" *ngIf="f?.formPassword?.touched && f?.formPassword?.errors?.pattern">
+                Le mot de passe doit être au moins de 8 caractères et contient au moins une minuscule,
+                une majuscule, un chiffre et un caractère spécial (@, $, !, %, *, ?, &)
+            </label>
+            <button class="eye-btn" (click)="showPassword = !showPassword"><i class="fa-solid fa-eye"></i></button>
+        </div> -->
+
+
+    </form>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button [disabled]="loading" class="cancel-btn" (click)="onCancelClick()">Annuler</button>
+    <button type="submit" class="confirm-btn" [disabled]="addUserForm?.invalid || loading" (click)="onConfirmClick()">
+        <span *ngIf="!loading">Ajouter</span>
+        <div *ngIf="loading">
+            <div class="spinner-border" role="status" style="width: 20px; height: 20px;">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </button>
+</div>

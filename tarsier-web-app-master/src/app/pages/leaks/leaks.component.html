@@ -1,0 +1,141 @@
+
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between">
+        <div> 
+            <button  style="border:none;background-color: transparent;">
+                <img src="assets/pareto.png" height="35">
+            </button>
+            &nbsp; &nbsp;
+            <button style="border:none;background-color: transparent;">
+                <img src="assets/bar-chart.png" height="35">
+            </button>
+        </div>
+        <div>
+            <button (click)="openPDF(choosenStartDate, choosenEndDate,choosenPeri,choosenTypeMiss);" style="border:none;background-color: transparent;">
+                <img src="assets/pdf.png" height="35">
+            </button>
+            &nbsp; &nbsp;
+            <button (click)="printThisPage()" style="border:none;background-color: transparent;">
+                <img src="assets/print.png" height="35">
+            </button>
+        </div>
+    </div>
+
+
+        <!-- Filter inputs -->
+        <div class="d-flex justify-content-center">
+            <div class="select-wrapper">
+                <label class="input-label" for="select-statut" for="input-peri">PERIMETRE</label>
+                <select class="select-setting" id="select-plan" [(ngModel)]="choosenPeri"
+                    (ngModelChange)="onPerimeterChange()">
+                    <option *ngFor="let peri of perimeters" [value]="peri.code">{{peri.code}}</option>
+                    <option [value]="'all'">Tout</option>
+                </select>
+            </div>
+
+            <div class="select-wrapper">
+                <label class="input-label" for="select-statut" for="input-typeMissionId">TYPE</label>
+                <select class="select-setting" id="select-plan" [(ngModel)]="choosenTypeMiss"
+                    (ngModelChange)="onTypeMissChange()">
+                    <option *ngFor="let tyMiss of tyMissionsList" [value]="tyMiss.typeMission">
+                        {{tyMiss.typeMission}}
+                    </option>
+                    <option [value]="'all'">Tout</option>
+
+                </select>
+            </div>
+
+            <div class="date-input-wrapper">
+                <label class="input-label">Date de début</label>
+                <input type="date" [(ngModel)]="choosenStartDate" (ngModelChange)="onStartDateChange()"
+                    class="choose-date" name="choose-date" id="choose-date">
+            </div>
+
+            <div class="date-input-wrapper">
+                <label class="input-label">Date de fin</label>
+                <input type="date" [(ngModel)]="choosenEndDate" (ngModelChange)="onEndDateChange()" class="choose-date"
+                    name="choose-date" id="choose-date">
+            </div>
+        </div>
+
+
+        <!-- Leaks Table -->
+        <div class="leak-table-container">
+            <ngx-datatable class="material" [rows]="leaks" [columnMode]="ColumnMode.force" [headerHeight]="70"
+                [footerHeight]="50" rowHeight="auto" [externalPaging]="true" [externalSorting]="true"
+                [count]="page.count" [offset]="page.offset" [limit]="page.limit" [loadingIndicator]="loading"
+                (page)="onPage($event)" [limit]="page.limit" [rowClass]="getRowClass"
+                [messages]="{'emptyMessage': 'Pas de données.'}" [sorts]="[{prop: 'createdOn', dir: 'desc'}]"
+                [sortType]="sortType" (sort)="onSort($event)">
+
+                <ngx-datatable-column name="Nom Fuite" prop="leakName">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <span> {{value}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Type" prop="typeMission">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <span>{{value}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Périmètre" prop="perimeterCode">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <span> {{value}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Localisation" prop="leakCoord" [sortable]="false">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <a [routerLink]="'/reservationDetails'" [queryParams]="{id: row.bookingId, index: 0}">
+                            <img class="pointeur-img" title="Voir l'emplacement" [src]="'assets/invalid-pin.png'"
+                                width="25" height="25">
+                        </a>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Numéro de réservation" prop="num_reservation">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <a [routerLink]="'/reservationDetails'"
+                            [queryParams]="{id: row.bookingId, index: 1}">{{value}}</a>
+                    </ng-template>
+                </ngx-datatable-column>
+
+
+                <ngx-datatable-column name="Cout (€ /an)" prop="leakCost">
+                    
+                    <ng-template ngx-datatable-header-template>
+                        <span>Cout (€ /an)</span><br>Total:
+                        <span class="total-cost"> {{totalCost | number:'1.0-2':'fr'}} €</span>
+                    </ng-template>
+
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <span>{{value | number:'1.0-2':'fr'}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Emission CO2 (Kg)" prop="leakCo2">
+                    <ng-template ngx-datatable-header-template>
+                        <span>Emission CO2 (Kg)</span><br>Total:
+                        <span class="total-cost">{{ totalEmissionCo2 | number:'1.0-2':'fr'}} Kg</span>
+                    </ng-template>
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <span>{{value | number:'1.0-2':'fr'}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Statut Action" prop="actionStatut">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <span>{{value}}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+
+    </div>
+    <div #htmlData>
+
+</div>

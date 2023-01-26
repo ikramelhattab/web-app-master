@@ -1,0 +1,40 @@
+<div class="container-fluid">
+    <div class="logo">
+        <img src="assets/safran-logo.png" alt="safran logo" height="60">
+    </div>
+    <div class="login-container">
+        <div class="login-form">
+
+            <div class="title text-center">Se connecter à votre compte</div>
+
+            <div class="info">Veuillez entrer l'email associé à votre compte Tarsio.</div>
+
+            <form *ngIf="loginForm" (ngSubmit)="submitLogin()" [formGroup]="loginForm">
+
+                <div class="form-group-control">
+                    <label class="input-label" for="input-email" [ngClass]="{'error': 
+                    (f?.formEmail?.touched && f?.formEmail?.errors?.pattern) 
+                    || (f?.formEmail?.touched && f?.formEmail?.errors?.required)}">E-MAIL* </label>
+                    <input type="email" class="form-control" pattern=".+@.+\..+" id="input-email" name="input-email"
+                        required placeholder="" formControlName="formEmail" autocomplete="username email" 
+                        [ngClass]="{'error': (f?.formEmail?.touched && f?.formEmail?.errors?.pattern) 
+                        || (f?.formEmail?.touched && f?.formEmail?.errors?.required)}">
+                    <label class="error ms-2" *ngIf="f?.formEmail?.touched && f?.formEmail?.errors?.pattern">Email non
+                        valide</label>
+                    <label class="error ms-2" *ngIf="f?.formEmail?.touched && f?.formEmail?.errors?.required">Ce champ
+                        est obligatoire</label>
+                </div>
+
+                <div class="text-center">
+                    <button [ngClass]="{'disabled': loginForm?.invalid || loading}" class="submit-button"
+                        type="submit">Continuer <i *ngIf="loading" class="fas fa-spinner fa-spin"></i></button>
+                </div>
+
+                <div class="login-error mt-4" *ngIf="loginErrorMsg">
+                    {{loginErrorMsg}}
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
